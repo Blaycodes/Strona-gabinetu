@@ -2,11 +2,6 @@
 
 Nowoczesna, responsywna strona typu one-page dla gabinetu kosmetologicznego. Projekt został wykonany w czystym HTML, CSS i JavaScript, dzięki czemu nie wymaga instalowania zależności i może być publikowany bezpośrednio przez GitHub Pages.
 
-## Podgląd
-
-Po włączeniu GitHub Pages strona będzie dostępna pod adresem:
-
-[https://przegniazdowani.github.io/Strona-gabinetu-kosmetologicznego/](https://przegniazdowani.github.io/Strona-gabinetu-kosmetologicznego/)
 
 ## Najważniejsze funkcje
 
