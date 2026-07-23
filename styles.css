@@ -411,6 +411,7 @@ button:focus-visible {
 }
 
 .hero-eyebrow {
+  margin-top: 28px;
   color: var(--gold-light);
 }
 
@@ -749,13 +750,16 @@ button:focus-visible {
 }
 
 .gallery-item-large {
-  grid-column: span 2;
-  grid-row: span 2;
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
 }
 
-.gallery-item-wide {
-  grid-column: span 2;
-}
+/* Jawne pozycje eliminują automatyczne utworzenie pustego trzeciego rzędu. */
+.gallery-item:nth-child(2) { grid-column: 3; grid-row: 1; }
+.gallery-item:nth-child(3) { grid-column: 4; grid-row: 1; }
+.gallery-item:nth-child(4) { grid-column: 3; grid-row: 2; }
+.gallery-item:nth-child(5),
+.gallery-item-wide { grid-column: 4; grid-row: 2; }
 
 .gallery-item img {
   width: 100%;
@@ -1493,9 +1497,17 @@ button:focus-visible {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .service-card { min-height: 335px; }
 
-  .gallery-grid { height: 680px; grid-template-columns: repeat(3, 1fr); }
-  .gallery-item-large { grid-column: span 1; }
-  .gallery-item-wide { grid-column: span 1; }
+  .gallery-grid {
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 420px repeat(2, 260px);
+  }
+  .gallery-item-large { grid-column: 1 / -1; grid-row: 1; }
+  .gallery-item:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .gallery-item:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .gallery-item:nth-child(4) { grid-column: 1; grid-row: 3; }
+  .gallery-item:nth-child(5),
+  .gallery-item-wide { grid-column: 2; grid-row: 3; }
 
   .testimonials-grid { gap: 15px; }
   .testimonial-card { min-height: 410px; padding: 28px; }
@@ -2064,5 +2076,306 @@ button:focus-visible {
 
   .ai-chatbot__messages {
     scroll-behavior: auto;
+  }
+}
+
+/* =====================================================
+   KOŃCOWE POPRAWKI RESPONSYWNE — TELEFONY I MAŁE TABLETY
+   Reguły znajdują się na końcu pliku, aby bezpiecznie
+   nadpisać wcześniejsze ustawienia bez zmian na desktopie.
+   ===================================================== */
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  main,
+  .site-header,
+  .site-footer,
+  .section {
+    max-width: 100%;
+  }
+
+  .container {
+    width: min(calc(100% - 28px), 620px);
+  }
+
+  .section {
+    padding-block: 72px;
+  }
+
+  .section-heading {
+    margin-bottom: 38px;
+    padding-inline: 2px;
+  }
+
+  .section-heading > p:last-child,
+  .pricing-intro > p,
+  .about-copy > p {
+    overflow-wrap: anywhere;
+  }
+
+  .service-card,
+  .testimonial-card,
+  .contact-details,
+  .contact-form,
+  .price-table-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Mobilny cennik: bez szerokiej tabeli i przewijania w bok. */
+  .pricing-layout {
+    width: 100%;
+    min-width: 0;
+    gap: 38px;
+  }
+
+  .pricing-intro {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .price-table-wrap {
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .price-table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .price-table thead {
+    display: none;
+  }
+
+  .price-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .price-table tbody tr {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+    background: var(--white);
+    column-gap: 14px;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-rows: auto auto;
+    row-gap: 3px;
+  }
+
+  .price-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .price-table td {
+    min-width: 0;
+    padding: 0 !important;
+    border: 0 !important;
+    line-height: 1.45;
+  }
+
+  .price-table td:first-child {
+    align-self: center;
+    color: var(--brown);
+    font-size: 0.73rem;
+    font-weight: 500;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    overflow-wrap: anywhere;
+  }
+
+  .price-table td:nth-child(2) {
+    color: var(--brown-soft);
+    font-size: 0.61rem;
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .price-table td:last-child {
+    color: var(--rose-dark);
+    font-size: 0.76rem;
+    font-weight: 600;
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* Czat jest pozycjonowany względem ekranu, nie szerokości dokumentu. */
+  .ai-chatbot {
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    left: auto;
+    max-width: calc(100vw - 24px);
+  }
+
+  .ai-chatbot__launcher {
+    max-width: calc(100vw - 24px);
+    white-space: nowrap;
+  }
+
+  .ai-chatbot__window {
+    position: fixed;
+    right: max(8px, env(safe-area-inset-right, 0px));
+    bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    left: max(8px, env(safe-area-inset-left, 0px));
+    width: auto;
+    height: min(620px, calc(100vh - 16px));
+    height: min(620px, calc(100dvh - 16px));
+    max-width: none;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px;
+    transform-origin: center bottom;
+  }
+
+  .ai-chatbot__messages {
+    min-width: 0;
+    overscroll-behavior: contain;
+  }
+
+  .ai-chatbot__message {
+    max-width: 88%;
+  }
+
+  .ai-chatbot__form,
+  .ai-chatbot__input-row,
+  .ai-chatbot__input-row input {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding-block: 60px;
+  }
+
+  h2 {
+    font-size: clamp(2.15rem, 11vw, 3rem);
+    overflow-wrap: anywhere;
+  }
+
+  .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .service-card {
+    padding: 28px 24px;
+    border-radius: 20px;
+  }
+
+  .service-card h3 {
+    font-size: 1.58rem;
+  }
+
+  .testimonial-card {
+    padding: 25px 22px;
+  }
+
+  .consultation-box {
+    gap: 10px 12px;
+    margin-block: 28px;
+    padding: 16px;
+  }
+
+  .price-table tbody tr {
+    padding: 15px 14px;
+    column-gap: 10px;
+  }
+
+  .price-table td:first-child {
+    font-size: 0.7rem;
+  }
+
+  .price-table td:nth-child(2) {
+    font-size: 0.58rem;
+  }
+
+  .price-table td:last-child {
+    font-size: 0.73rem;
+  }
+
+  .contact-details,
+  .contact-form {
+    padding: 28px 20px;
+  }
+
+  .map-wrapper {
+    height: 300px;
+  }
+
+  .ai-chatbot__header {
+    min-height: 70px;
+    padding: 12px 13px;
+  }
+
+  .ai-chatbot__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ai-chatbot__heading h2 {
+    font-size: 1.24rem;
+    overflow-wrap: normal;
+  }
+
+  .ai-chatbot__messages {
+    padding: 14px 12px;
+  }
+
+  .ai-chatbot__message {
+    max-width: 90%;
+    padding: 9px 11px;
+    font-size: 0.69rem;
+  }
+
+  .ai-chatbot__form {
+    padding: 10px 11px max(9px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 390px) {
+  .hero h1 {
+    font-size: 2.95rem;
+  }
+
+  .hero-trust {
+    gap: 7px;
+  }
+
+  .hero-trust strong {
+    font-size: 1.32rem;
+  }
+
+  .hero-trust span {
+    font-size: 0.53rem;
+  }
+
+  .price-table tbody tr {
+    padding-inline: 12px;
+  }
+
+  .price-table td:first-child {
+    padding-right: 2px !important;
+  }
+
+  .ai-chatbot__close {
+    width: 34px;
+    height: 34px;
   }
 }
